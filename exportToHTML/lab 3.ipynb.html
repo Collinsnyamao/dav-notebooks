@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>lab 3.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #cf8e6d;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.ls0 { height: 1px; border-width: 0; color: #43454a; background-color:#43454a}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+lab 3.ipynb</font>
+</center></td></tr></table>
+<pre><span class="s0">#%% 
+</span><span class="s1">import </span><span class="s0">numpy </span><span class="s1">as </span><span class="s0">np</span>
+<span class="s1">import </span><span class="s0">pandas </span><span class="s1">as </span><span class="s0">pd</span><hr class="ls0"><span class="s0">#%% 
+perfume_data </span><span class="s2">= </span><span class="s0">pd</span><span class="s2">.</span><span class="s0">read_csv</span><span class="s2">(</span><span class="s3">'./noon_perfumes_dataset.csv'</span><span class="s2">)</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">head</span><span class="s2">()</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">shape</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">info</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">iloc</span><span class="s2">[</span><span class="s4">15</span><span class="s2">:</span><span class="s4">20</span><span class="s2">]</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">columns</span><hr class="ls0"><span class="s0">#%% 
+new_data_set </span><span class="s2">= </span><span class="s0">perfume_data</span><span class="s2">[[</span><span class="s3">'name'</span><span class="s2">, </span><span class="s3">'new_price'</span><span class="s2">, </span><span class="s3">'ml'</span><span class="s2">]]</span>
+<span class="s0">new_data_set</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">loc</span><span class="s2">[</span><span class="s0">perfume_data</span><span class="s2">[</span><span class="s3">'brand'</span><span class="s2">].</span><span class="s0">str</span><span class="s2">.</span><span class="s0">contains</span><span class="s2">(</span><span class="s3">'Tommy Hilfiger'</span><span class="s2">, </span><span class="s0">case</span><span class="s2">=</span><span class="s1">False</span><span class="s2">)]</span><hr class="ls0"><span class="s0">#%% 
+mens_perfumes </span><span class="s2">= </span><span class="s0">perfume_data</span><span class="s2">.</span><span class="s0">loc</span><span class="s2">[</span><span class="s0">perfume_data</span><span class="s2">[</span><span class="s3">'department'</span><span class="s2">] == </span><span class="s3">'Men'</span><span class="s2">]</span>
+<span class="s0">mens_perfumes</span><hr class="ls0"><span class="s0">#%% 
+women_perfumes </span><span class="s2">= </span><span class="s0">perfume_data</span><span class="s2">.</span><span class="s0">loc</span><span class="s2">[</span><span class="s0">perfume_data</span><span class="s2">[</span><span class="s3">'department'</span><span class="s2">] == </span><span class="s3">'Women'</span><span class="s2">]</span>
+<span class="s0">women_perfumes</span><hr class="ls0"><span class="s0">#%% 
+women_scent_popularity </span><span class="s2">= </span><span class="s0">women_perfumes</span><span class="s2">.</span><span class="s0">groupby</span><span class="s2">(</span><span class="s3">'scents'</span><span class="s2">)[</span><span class="s3">'item_rating'</span><span class="s2">].</span><span class="s0">agg</span><span class="s2">([</span>
+    <span class="s3">'mean'</span><span class="s2">,</span>
+    <span class="s3">'count'</span>
+<span class="s2">]).</span><span class="s0">reset_index</span><span class="s2">()</span>
+<span class="s0">popular_scents </span><span class="s2">= </span><span class="s0">women_scent_popularity</span><span class="s2">[</span><span class="s0">women_scent_popularity</span><span class="s2">[</span><span class="s3">'count'</span><span class="s2">] &gt;= </span><span class="s4">5</span><span class="s2">].</span><span class="s0">sort_values</span><span class="s2">(</span><span class="s3">'mean'</span><span class="s2">, </span><span class="s0">ascending</span><span class="s2">=</span><span class="s1">False</span><span class="s2">)</span>
+<span class="s0">popular_scents</span><span class="s2">.</span><span class="s0">iloc</span><span class="s2">[</span><span class="s4">0</span><span class="s2">]</span><hr class="ls0"><span class="s0">#%% 
+mens_scent_popularity </span><span class="s2">= </span><span class="s0">mens_perfumes</span><span class="s2">.</span><span class="s0">groupby</span><span class="s2">(</span><span class="s3">'scents'</span><span class="s2">)[</span><span class="s3">'item_rating'</span><span class="s2">].</span><span class="s0">agg</span><span class="s2">([</span>
+    <span class="s3">'mean'</span><span class="s2">,</span>
+    <span class="s3">'count'</span>
+<span class="s2">]).</span><span class="s0">reset_index</span><span class="s2">()</span>
+<span class="s0">popular_scents </span><span class="s2">= </span><span class="s0">mens_scent_popularity</span><span class="s2">[</span><span class="s0">mens_scent_popularity</span><span class="s2">[</span><span class="s3">'count'</span><span class="s2">] &gt;= </span><span class="s4">5</span><span class="s2">].</span><span class="s0">sort_values</span><span class="s2">(</span><span class="s3">'mean'</span><span class="s2">, </span><span class="s0">ascending</span><span class="s2">=</span><span class="s1">False</span><span class="s2">)</span>
+<span class="s0">popular_scents</span><span class="s2">.</span><span class="s0">iloc</span><span class="s2">[</span><span class="s4">0</span><span class="s2">]</span><hr class="ls0"><span class="s0">#%% 
+brand_ratings </span><span class="s2">= </span><span class="s0">perfume_data</span><span class="s2">.</span><span class="s0">groupby</span><span class="s2">(</span><span class="s3">'brand'</span><span class="s2">)[</span><span class="s3">'item_rating'</span><span class="s2">].</span><span class="s0">agg</span><span class="s2">([</span><span class="s3">'mean'</span><span class="s2">, </span><span class="s3">'count'</span><span class="s2">])</span>
+<span class="s0">top_brands </span><span class="s2">= </span><span class="s0">brand_ratings</span><span class="s2">[</span><span class="s0">brand_ratings</span><span class="s2">[</span><span class="s3">'count'</span><span class="s2">] &gt;= </span><span class="s4">5</span><span class="s2">].</span><span class="s0">sort_values</span><span class="s2">(</span><span class="s3">'mean'</span><span class="s2">, </span><span class="s0">ascending</span><span class="s2">=</span><span class="s1">False</span><span class="s2">).</span><span class="s0">head</span><span class="s2">(</span><span class="s4">10</span><span class="s2">)</span>
+<span class="s0">print</span><span class="s2">(</span><span class="s3">&quot;Top 10 Brands by Rating (min 5 products):&quot;</span><span class="s2">)</span>
+<span class="s0">print</span><span class="s2">(</span><span class="s0">top_brands</span><span class="s2">)</span><hr class="ls0"><span class="s0">#%% 
+perfume_data</span><span class="s2">.</span><span class="s0">columns</span><hr class="ls0"><span class="s0">#%% 
+avg_rating </span><span class="s2">= </span><span class="s0">perfume_data</span><span class="s2">.</span><span class="s0">loc</span><span class="s2">[(</span><span class="s0">perfume_data</span><span class="s2">[</span><span class="s3">'ml'</span><span class="s2">] == </span><span class="s4">100</span><span class="s2">) &amp; (</span><span class="s0">perfume_data</span><span class="s2">[</span><span class="s3">'department'</span><span class="s2">] == </span><span class="s3">'Women'</span><span class="s2">)][</span><span class="s3">'new_price'</span><span class="s2">].</span><span class="s0">mean</span><span class="s2">().</span><span class="s0">round</span><span class="s2">(</span><span class="s4">4</span><span class="s2">)</span>
+<span class="s0">print</span><span class="s2">(</span><span class="s3">f&quot;Average rating: </span><span class="s1">{</span><span class="s0">avg_rating</span><span class="s1">:</span><span class="s3">.2f</span><span class="s1">}</span><span class="s3">&quot;</span><span class="s2">)</span><hr class="ls0"><span class="s0">#%% 
+seller_stats </span><span class="s2">= </span><span class="s0">perfume_data</span><span class="s2">.</span><span class="s0">groupby</span><span class="s2">(</span><span class="s3">'seller'</span><span class="s2">).</span><span class="s0">agg</span><span class="s2">({</span>
+    <span class="s3">'name'</span><span class="s2">: </span><span class="s3">'count'</span><span class="s2">,</span>
+    <span class="s3">'item_rating'</span><span class="s2">: </span><span class="s3">'mean'</span><span class="s2">,</span>
+    <span class="s3">'num_seller_ratings'</span><span class="s2">: </span><span class="s3">'first'</span>
+<span class="s2">}).</span><span class="s0">rename</span><span class="s2">(</span><span class="s0">columns</span><span class="s2">={</span><span class="s3">'name'</span><span class="s2">: </span><span class="s3">'product_count'</span><span class="s2">}).</span><span class="s0">sort_values</span><span class="s2">(</span><span class="s3">'product_count'</span><span class="s2">, </span><span class="s0">ascending</span><span class="s2">=</span><span class="s1">False</span><span class="s2">)</span>
+
+<span class="s0">print</span><span class="s2">(</span><span class="s3">&quot;Top sellers:&quot;</span><span class="s2">)</span>
+<span class="s0">print</span><span class="s2">(</span><span class="s0">seller_stats</span><span class="s2">.</span><span class="s0">head</span><span class="s2">(</span><span class="s4">10</span><span class="s2">))</span></pre>
+</body>
+</html>
